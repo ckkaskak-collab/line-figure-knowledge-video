@@ -1,0 +1,44 @@
+{
+  "source_url": "https://x.com/xilo2991/status/2091071218963411453",
+  "retrieved_at": "2026-09-20T05:02:37.590418+00:00",
+  "selector": ".x-article-code-body pre",
+  "method": "Browser DOM text; whitespace retained; no copy-button UI text. Fingerprints compared against the copied prompt text.",
+  "prompts": [
+    {
+      "index": 1,
+      "length_utf16": 620,
+      "fnv1a_utf16": "708d4d26",
+      "extraction_note": "Matches current browser text without adjustment."
+    },
+    {
+      "index": 2,
+      "length_utf16": 1351,
+      "fnv1a_utf16": "59ec9e59",
+      "extraction_note": "Matches current browser text without adjustment."
+    },
+    {
+      "index": 3,
+      "length_utf16": 398,
+      "fnv1a_utf16": "ba58f457",
+      "extraction_note": "Matches current browser text without adjustment."
+    },
+    {
+      "index": 4,
+      "length_utf16": 481,
+      "fnv1a_utf16": "9a7da30a",
+      "extraction_note": "Prior archive contained one terminal LF; current browser pre text has none. Only that final LF was removed to match current source extraction."
+    },
+    {
+      "index": 5,
+      "length_utf16": 923,
+      "fnv1a_utf16": "2e281310",
+      "extraction_note": "Prior archive contained one terminal LF; current browser pre text has none. Only that final LF was removed to match current source extraction."
+    },
+    {
+      "index": 6,
+      "length_utf16": 574,
+      "fnv1a_utf16": "70306b39",
+      "extraction_note": "Matches current browser text without adjustment."
+    }
+  ]
+}
