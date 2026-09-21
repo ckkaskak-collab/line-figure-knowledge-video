@@ -1,0 +1,4 @@
+interface:
+  display_name: "线条小人知识视频"
+  short_description: "内置角色与手绘动画模板，完成声学对齐、线条小人知识视频及按需封面"
+  default_prompt: "使用 $line-figure-knowledge-video 根据我提供的文案或配音连续完成线条小人知识视频，沿用白底角色与浅灰手绘风格，并交付可编辑工程和所需成片。"
