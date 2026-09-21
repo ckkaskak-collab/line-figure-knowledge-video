@@ -1,0 +1,197 @@
+{
+  "id": "retrieve-answer",
+  "title": "资料用于回答",
+  "semantic": "问题 → 资料 → 选中 → 回答",
+  "runtime": "ChatCut native motion graphic",
+  "width": 1920,
+  "height": 1080,
+  "suggested_duration_frames": 300,
+  "timing_keys": [
+    "sourceFrame",
+    "selectFrame",
+    "resultFrame"
+  ],
+  "minimum_tail_frames": 24,
+  "source_note": "Adapted from locally produced hand-drawn motion graphics; project identifiers and topic-specific content removed. Original project had sampled-frame checks; validate each new instance.",
+  "properties": [
+    {
+      "key": "title",
+      "type": "text",
+      "label": "标题",
+      "defaultValue": "先查资料，再回答"
+    },
+    {
+      "key": "questionLabel",
+      "type": "text",
+      "label": "问题标签",
+      "defaultValue": "提出问题"
+    },
+    {
+      "key": "retrieveLabel",
+      "type": "text",
+      "label": "资料标签",
+      "defaultValue": "检索资料"
+    },
+    {
+      "key": "answerLabel",
+      "type": "text",
+      "label": "回答标签",
+      "defaultValue": "组织回答"
+    },
+    {
+      "key": "questionSymbol",
+      "type": "text",
+      "label": "问题符号",
+      "defaultValue": "?"
+    },
+    {
+      "key": "headingFont",
+      "type": "font",
+      "label": "手写字体",
+      "defaultValue": "Ma Shan Zheng"
+    },
+    {
+      "key": "titleSize",
+      "max": 152,
+      "min": 90,
+      "step": 1,
+      "type": "number",
+      "label": "标题字号",
+      "defaultValue": 132
+    },
+    {
+      "key": "labelSize",
+      "max": 86,
+      "min": 48,
+      "step": 1,
+      "type": "number",
+      "label": "标签字号",
+      "defaultValue": 72
+    },
+    {
+      "key": "lineWidth",
+      "max": 9,
+      "min": 3,
+      "step": 1,
+      "type": "number",
+      "label": "手绘线宽",
+      "defaultValue": 6
+    },
+    {
+      "key": "bgColor",
+      "type": "color",
+      "label": "浅灰背景",
+      "defaultValue": "#F5F6F7"
+    },
+    {
+      "key": "paper",
+      "type": "color",
+      "label": "纸张白色",
+      "defaultValue": "#FFFFFF"
+    },
+    {
+      "key": "ink",
+      "type": "color",
+      "label": "炭黑线条",
+      "defaultValue": "#202124"
+    },
+    {
+      "key": "gray",
+      "type": "color",
+      "label": "次要线条",
+      "defaultValue": "#8C939A"
+    },
+    {
+      "key": "blue",
+      "type": "color",
+      "label": "依据蓝色",
+      "defaultValue": "#4778B8"
+    },
+    {
+      "key": "orange",
+      "type": "color",
+      "label": "方向橙色",
+      "defaultValue": "#E58B45"
+    },
+    {
+      "key": "transparentBackground",
+      "type": "boolean",
+      "label": "透明背景",
+      "defaultValue": false
+    },
+    {
+      "key": "previewStage",
+      "type": "select",
+      "label": "预览阶段",
+      "options": [
+        {
+          "label": "按配音播放",
+          "value": "auto"
+        },
+        {
+          "label": "问题",
+          "value": "question"
+        },
+        {
+          "label": "资料",
+          "value": "source"
+        },
+        {
+          "label": "选中依据",
+          "value": "selection"
+        },
+        {
+          "label": "完整结果",
+          "value": "complete"
+        }
+      ],
+      "defaultValue": "auto"
+    },
+    {
+      "key": "sourceFrame",
+      "max": 299,
+      "min": 0,
+      "step": 1,
+      "type": "number",
+      "label": "资料开始（镜内帧）",
+      "defaultValue": 45
+    },
+    {
+      "key": "selectFrame",
+      "max": 299,
+      "min": 0,
+      "step": 1,
+      "type": "number",
+      "label": "选中开始（镜内帧）",
+      "defaultValue": 110
+    },
+    {
+      "key": "resultFrame",
+      "max": 299,
+      "min": 0,
+      "step": 1,
+      "type": "number",
+      "label": "回答开始（镜内帧）",
+      "defaultValue": 180
+    },
+    {
+      "key": "revealFrames",
+      "max": 30,
+      "min": 1,
+      "step": 1,
+      "type": "number",
+      "label": "单步显现帧数",
+      "defaultValue": 8
+    },
+    {
+      "key": "linkFrames",
+      "max": 45,
+      "min": 1,
+      "step": 1,
+      "type": "number",
+      "label": "连线绘制帧数",
+      "defaultValue": 24
+    }
+  ],
+  "code": "const Component = ({ item }) => {\n  const props = item.props;\n  const ink = props.ink;\n  const blue = props.blue;\n  const orange = props.orange;\n  const gray = props.gray;\n  const paper = props.paper;\n  const stroke = props.lineWidth;\n  const font = props.headingFont;\n  const title = props.title;\n  const question = props.questionLabel;\n  const retrieve = props.retrieveLabel;\n  const answer = props.answerLabel;\n  const symbol = props.questionSymbol;\n  const frame = useCurrentFrame();\n  const stage = props.previewStage;\n  const auto = stage === \"auto\";\n  const ramp = (start, length) => Math.max(0, Math.min(1, (frame - start) / Math.max(1, length)));\n  const sourceOpacity = auto ? ramp(props.sourceFrame, props.revealFrames) : stage === \"question\" ? 0 : 1;\n  const selectionOpacity = auto ? ramp(props.selectFrame, props.revealFrames) : stage === \"complete\" || stage === \"selection\" ? 1 : 0;\n  const resultOpacity = auto ? ramp(props.resultFrame, props.revealFrames) : stage === \"complete\" ? 1 : 0;\n  const selection2 = auto ? ramp(props.selectFrame + props.revealFrames, props.revealFrames) : selectionOpacity;\n  const connector = auto ? ramp(props.resultFrame, props.linkFrames) : resultOpacity;\n  const resultInk = auto ? ramp(props.resultFrame + props.linkFrames, props.revealFrames) : resultOpacity;\n  const selectionDash = 1 - selectionOpacity;\n  const selection2Dash = 1 - selection2;\n  const sourceArrowDash = 1 - sourceOpacity;\n  const linkClipWidth = 530 * connector;\n  const linkTransform = \"translate(\" + (30 * (1-sourceOpacity)) + \" \" + (-22 * (1-sourceOpacity)) + \")\";\n  const resultMarkOpacity = resultInk;\n\n  const rootStyle = {position:\"absolute\",inset:0,backgroundColor:props.transparentBackground ? \"transparent\" : props.bgColor,overflow:\"hidden\"};\n  const titleStyle = {position:\"absolute\",left:120,right:120,top:64,height:166,display:\"flex\",alignItems:\"center\",justifyContent:\"center\",textAlign:\"center\",fontFamily:font,fontSize:props.titleSize,fontWeight:400,lineHeight:1.12,color:ink};\n  const labelRow = {position:\"absolute\",left:48,right:48,top:814,height:96,display:\"grid\",gridTemplateColumns:\"repeat(3, 1fr)\",alignItems:\"center\",gap:30,fontFamily:font,fontSize:props.labelSize,lineHeight:1.15,textAlign:\"center\",color:ink};\n  const sourceLabelStyle = {opacity:sourceOpacity,overflowWrap:\"break-word\"};\n  const answerLabelStyle = {opacity:resultOpacity,overflowWrap:\"break-word\"};\n  const symbolStyle = {fontFamily:font,fontWeight:400};\n  const svgStyle = {position:\"absolute\",inset:0,width:\"100%\",height:\"100%\"};\n  return <div style={rootStyle}>\n    <svg viewBox=\"0 0 1920 1080\" style={svgStyle}>\n      <defs><clipPath id=\"evidence-link-clip\"><rect x=\"1040\" y=\"330\" width={linkClipWidth} height=\"380\"/></clipPath></defs>\n      <path d=\"M540 249 Q970 226 1426 248\" fill=\"none\" stroke={blue} strokeWidth=\"15\" strokeLinecap=\"round\"/>\n      <g stroke={ink} strokeWidth={stroke} strokeLinecap=\"round\" strokeLinejoin=\"round\">\n        <path d=\"M140 445 C178 346 451 353 514 434 C565 513 518 632 353 640 L160 716 L213 629 C90 601 99 505 140 445Z\" fill={paper}/>\n        <path d=\"M303 444 L455 438 M310 490 L459 490 M309 539 L426 538\" stroke={gray} strokeWidth=\"10\"/>\n        <path d=\"M109 360 L88 329 M166 337 L157 298 M542 407 L574 387\" fill=\"none\"/>\n      </g>\n      <text x=\"174\" y=\"541\" fontSize=\"147\" fill={ink} style={symbolStyle}>{symbol}</text>\n      <g opacity={sourceOpacity}>\n        <path pathLength=\"1\" strokeDasharray=\"1\" strokeDashoffset={sourceArrowDash} d=\"M568 532 Q616 526 665 529 M639 506 L668 529 L641 552\" fill=\"none\" stroke={orange} strokeWidth=\"18\" strokeLinecap=\"round\" strokeLinejoin=\"round\"/>\n        <g fill={paper} stroke={ink} strokeWidth={stroke} strokeLinejoin=\"round\">\n          <path d=\"M743 378 L921 340 L994 663 L796 699Z\"/>\n          <path d=\"M965 346 L1137 373 L1105 713 L922 685Z\"/>\n          <path d=\"M793 429 L1016 390 L1076 742 L841 781Z\"/>\n        </g>\n        <g fill=\"none\" stroke={gray} strokeWidth=\"8\" strokeLinecap=\"round\">\n          <path d=\"M766 404 L883 383 M775 431 L892 410 M995 388 L1097 403 M990 418 L1090 432\"/>\n          <path d=\"M837 463 L977 440 M845 497 L985 474 M853 532 L994 509 M861 567 L1002 544 M869 602 L1010 579 M877 637 L1018 614 M885 672 L999 653 M894 705 L997 688\"/>\n        </g>\n        <g fill=\"none\" stroke={blue} strokeWidth=\"20\" strokeLinecap=\"round\">\n          <path opacity={selectionOpacity} pathLength=\"1\" strokeDasharray=\"1\" strokeDashoffset={selectionDash} d=\"M852 530 L988 508\"/>\n          <path opacity={selection2} pathLength=\"1\" strokeDasharray=\"1\" strokeDashoffset={selection2Dash} d=\"M869 601 L1006 578\"/>\n        </g>\n        <g transform={linkTransform} fill=\"none\" stroke={ink} strokeWidth={stroke} strokeLinecap=\"round\">\n          <circle cx=\"964\" cy=\"542\" r=\"126\" fill=\"none\"/>\n          <circle cx=\"964\" cy=\"542\" r=\"113\" fill=\"none\"/>\n          <path d=\"M1055 635 L1179 754 Q1195 752 1200 735 L1079 616Z\" fill={paper}/>\n        </g>\n      </g>\n      <g opacity={resultOpacity}>\n        <g fill={paper} stroke={ink} strokeWidth={stroke} strokeLinejoin=\"round\">\n          <path d=\"M1519 365 L1740 369 L1802 427 L1794 751 L1518 759Z\"/>\n          <path d=\"M1740 369 L1737 432 L1802 427\" fill=\"none\"/>\n        </g>\n        <g fill=\"none\" stroke={gray} strokeWidth=\"9\" strokeLinecap=\"round\">\n          <path d=\"M1555 426 L1661 425 M1555 466 L1745 466 M1554 510 L1745 510 M1553 553 L1743 553 M1553 599 L1742 599 M1552 644 L1741 644 M1554 689 L1694 689\"/>\n        </g>\n        <g opacity={resultMarkOpacity} fill=\"none\" stroke={blue} strokeWidth=\"23\" strokeLinecap=\"round\">\n          <path d=\"M1564 511 L1733 511 M1563 598 L1732 598\"/>\n        </g>\n        <g clipPath=\"url(#evidence-link-clip)\" fill=\"none\" stroke={blue} strokeWidth=\"7\" strokeLinecap=\"round\" strokeDasharray=\"11 12\">\n          <path d=\"M1085 466 Q1240 356 1370 445 T1550 511\"/>\n          <path d=\"M1089 592 Q1243 548 1378 581 T1550 598\"/>\n        </g>\n        <g opacity={resultMarkOpacity} fill=\"none\" stroke={blue} strokeWidth=\"7\" strokeLinecap=\"round\" strokeLinejoin=\"round\">\n          <path d=\"M1532 495 L1555 512 L1532 524 M1531 582 L1554 598 L1530 611\"/>\n        </g>\n        <path d=\"M1318 701 Q1393 699 1464 691 M1441 670 L1470 691 L1446 716\" fill=\"none\" stroke={orange} strokeWidth=\"19\" strokeLinecap=\"round\" strokeLinejoin=\"round\"/>\n      </g>\n    </svg>\n    <div style={titleStyle}>{title}</div>\n    <div style={labelRow}><div>{question}</div><div style={sourceLabelStyle}>{retrieve}</div><div style={answerLabelStyle}>{answer}</div></div>\n  </div>;\n};"
+}

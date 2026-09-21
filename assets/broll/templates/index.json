@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "runtime": "ChatCut native MG",
+  "canvas": {
+    "width": 1920,
+    "height": 1080
+  },
+  "templates": [
+    {
+      "id": "retrieve-answer",
+      "title": "资料用于回答",
+      "semantic": "问题 → 资料 → 选中 → 回答",
+      "file": "retrieve-answer.json",
+      "external_media_required": false
+    },
+    {
+      "id": "compare",
+      "title": "两侧比较",
+      "semantic": "两侧对象及成本或结果的对照",
+      "file": "compare.json",
+      "external_media_required": false
+    },
+    {
+      "id": "branch",
+      "title": "路径分流",
+      "semantic": "从同一入口分向不同去处",
+      "file": "branch.json",
+      "external_media_required": false
+    },
+    {
+      "id": "evidence",
+      "title": "真实截图外围布局",
+      "semantic": "独立截图搭配简短标注",
+      "file": "evidence.json",
+      "external_media_required": true
+    }
+  ]
+}
