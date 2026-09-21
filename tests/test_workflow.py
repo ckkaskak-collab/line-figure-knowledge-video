@@ -147,7 +147,7 @@ class WorkflowTests(unittest.TestCase):
                 with self.assertRaises(SystemExit):
                     synthesize_doubao.main()
             self.assertEqual(read_json(out / "tts-attempt.json")["status"], "uncertain")
-            self.assertNotIn("dummy-test-key", (out / "tts-request.json").read_text())
+            self.assertNotIn("dummy-test-key", (out / "tts-request.json").read_text(encoding="utf-8"))
             retry = subprocess.run([sys.executable, str(ROOT / "scripts/synthesize_doubao.py"), *argv[1:]], capture_output=True, text=True)
             self.assertNotEqual(retry.returncode, 0)
             self.assertIn("Prior attempt or audio exists", retry.stderr)
