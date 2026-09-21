@@ -1,0 +1,7 @@
+# Keep text portable across Git checkouts, including Windows core.autocrlf.
+* text=auto eol=lf
+*.png -text
+*.jpg -text
+# Source records are byte-verified; preserve their original bytes verbatim.
+references/original-prompts/** -text
+references/source-snapshots/** -text
