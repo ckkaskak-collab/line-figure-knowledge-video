@@ -1,0 +1,18 @@
+# Local state and credentials
+.DS_Store
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+doubao-tts.json
+*.pem
+*.key
+# Generated projects and packages
+projects/
+outputs/
+my-video/
+*.zip
+.skill-backups/
