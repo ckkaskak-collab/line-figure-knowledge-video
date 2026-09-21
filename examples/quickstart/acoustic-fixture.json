@@ -1,0 +1,8 @@
+{
+  "source": "Synthetic timing fixture for offline software checks; not measured speech",
+  "duration_ms": 2500,
+  "words": [
+    {"text": "先查资料", "start_ms": 200, "end_ms": 1000},
+    {"text": "再回答", "start_ms": 1300, "end_ms": 2200}
+  ]
+}
