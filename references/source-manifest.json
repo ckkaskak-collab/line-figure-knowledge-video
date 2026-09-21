@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-09-20T05:02:37.590418+00:00",
+  "sources": {
+    "x": {
+      "url": "https://x.com/xilo2991/status/2091071218963411453",
+      "title": "Codex剪辑第三弹：2条视频接下近四位数商单，知识类视频剪辑方法全公开【万字长文】",
+      "author": "xilo (@xilo2991)",
+      "snapshot_path": "references/source-snapshots/x-browser-fingerprints.json",
+      "snapshot_sha256": "ef64d385a53e7813fcce0da1357a898c5b110d16d7786b8fe789a660ee866704",
+      "verification": "Current browser UTF-16 lengths and FNV-1a fingerprints; local UTF-8 SHA-256 for later integrity checks."
+    },
+    "feishu": {
+      "url": "https://my.feishu.cn/docx/XRnSdQFzyokslGxgIDWc437Znxf",
+      "document_id": "XRnSdQFzyokslGxgIDWc437Znxf",
+      "revision_id": 30,
+      "snapshot_path": "references/source-snapshots/feishu-revision-30.json",
+      "snapshot_sha256": "0e133574809c5d89a30eb84d78ed5d49e31f732bfb553bdf1a90a5739686f9d5",
+      "extraction": "Extract each pre/code block from docs +fetch full XML. Decode XML entities and convert <br/> to literal LF. Do not trim, rewrite or normalize text."
+    }
+  },
+  "prompts": [
+    {
+      "id": "x-01",
+      "title": "配音与声学对齐",
+      "source": "x",
+      "source_index": 1,
+      "path": "references/original-prompts/x/01-voice-alignment.txt",
+      "bytes_utf8": 1464,
+      "length_utf16": 620,
+      "sha256": "60901a0ef45101503dea3c6a61b38ee9ef222b570e9bc01a18c916cac760367f",
+      "fnv1a_utf16": "708d4d26"
+    },
+    {
+      "id": "x-02",
+      "title": "视觉编排表",
+      "source": "x",
+      "source_index": 2,
+      "path": "references/original-prompts/x/02-visual-storyboard.txt",
+      "bytes_utf8": 3495,
+      "length_utf16": 1351,
+      "sha256": "2cbcb1c44c1370afefa2eac44912606afcbf42cca80d82017f7fdfb97ff034e9",
+      "fnv1a_utf16": "59ec9e59"
+    },
+    {
+      "id": "x-03",
+      "title": "角色三视图",
+      "source": "x",
+      "source_index": 3,
+      "path": "references/original-prompts/x/03-character-three-views.txt",
+      "bytes_utf8": 1088,
+      "length_utf16": 398,
+      "sha256": "b8b3e23078b4e79a328effd1d5e8017b840050984260dd18b36991d1a51b8c54",
+      "fnv1a_utf16": "ba58f457"
+    },
+    {
+      "id": "x-04",
+      "title": "A-roll画面",
+      "source": "x",
+      "source_index": 4,
+      "path": "references/original-prompts/x/04-aroll-image.txt",
+      "bytes_utf8": 1305,
+      "length_utf16": 481,
+      "sha256": "f91ddf95665d0c09693e008d22a5a7089876fd4307b11d4e54e764204689fb55",
+      "fnv1a_utf16": "9a7da30a"
+    },
+    {
+      "id": "x-05",
+      "title": "A-roll多视角",
+      "source": "x",
+      "source_index": 5,
+      "path": "references/original-prompts/x/05-aroll-perspectives.txt",
+      "bytes_utf8": 2433,
+      "length_utf16": 923,
+      "sha256": "79d2455b5377f7f1575d40411159f87d1172ec0ca40f79610e97dc4ce11bbf04",
+      "fnv1a_utf16": "2e281310"
+    },
+    {
+      "id": "x-06",
+      "title": "B-roll动效选择",
+      "source": "x",
+      "source_index": 6,
+      "path": "references/original-prompts/x/06-broll-motion.txt",
+      "bytes_utf8": 1298,
+      "length_utf16": 574,
+      "sha256": "370e744a6a42e8b52986156444c785149945747f9ffd88bfd3ccb6fb319778a1",
+      "fnv1a_utf16": "70306b39"
+    },
+    {
+      "id": "feishu-visual-v2",
+      "title": "视觉编排表提示词（2.0版）",
+      "source": "feishu",
+      "block_id": "doxcn7aZ3zGK5CQLRnkbIcur5vg",
+      "path": "references/original-prompts/feishu/visual-storyboard-v2.txt",
+      "usage": "active_visual_storyboard",
+      "bytes_utf8": 5626,
+      "length_utf16": 2270,
+      "sha256": "d19a2409d4978b57e3d730cb708dbe2e1823a9dbad5f3b1ef397834636931dc3",
+      "fnv1a_utf16": "458f8f7c"
+    },
+    {
+      "id": "feishu-chatcut-v2",
+      "title": "ChatCut剪辑提示词（2.0版）",
+      "source": "feishu",
+      "block_id": "doxcnJ57ULNAqjaDCausHMWpjph",
+      "path": "references/original-prompts/feishu/chatcut-editing-v2.txt",
+      "usage": "active_chatcut_editing_stage",
+      "bytes_utf8": 5725,
+      "length_utf16": 2337,
+      "sha256": "e37734e3e412e0d5995c784a0c74f34e39dc151f33746330ea60c7b48830c062",
+      "fnv1a_utf16": "1e5b00b7"
+    }
+  ]
+}
