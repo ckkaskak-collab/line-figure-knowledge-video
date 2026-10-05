@@ -37,13 +37,13 @@ python3 scripts/align_audio.py --script my-video/script.txt --asr my-video/audio
 
 ## 导出最终字幕
 
-将最终 Card 转成 [规范格式](captions-and-delivery.md)，然后运行：
+先按 [字幕切分与显示](captions-and-delivery.md#字幕切分与显示) 以标点分屏、按真实词时间对齐；最终 Card 每屏一行且去掉句读标点，原稿和声学表保留原样。将最终 Card 转成规范格式，然后运行：
 
 ```bash
 python3 scripts/captions_to_srt.py --input final-cards.json --output final.srt
 ```
 
-该工具使用 Card 的最终显示时间；声学 SRT 与最终显示 SRT 是两个不同文件。
+该工具原样保留 Card 的显示文字和最终显示时间，不替调用者切分或去标点；声学 SRT 与最终显示 SRT 是两个不同文件。
 
 ## 实例化 B-roll 模板
 
