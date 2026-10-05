@@ -27,17 +27,18 @@ def run_demo(output):
     result = read_json(project / "alignment/phrase-acoustic.json")
     assert result["shared_boundaries_ms"] == [0, 1150, 2500]
     assert result["shared_boundaries_frames"] == [0, 35, 75]
-    cards = {"fps": "30", "cards": [{"text": "先查资料，再回答。", "start_frame": 6, "end_frame": 66}]}
+    cards = {"fps": "30", "cards": [{"text": "先查资料", "start_frame": 6, "end_frame": 30}, {"text": "再回答", "start_frame": 39, "end_frame": 66}]}
     write_json(project / "final-cards.json", cards)
     run("captions_to_srt.py", "--input", project / "final-cards.json", "--output", project / "delivery/final.srt", root=installed)
-    assert "先查资料，再回答。" in (project / "delivery/final.srt").read_text(encoding="utf-8")
+    srt = (project / "delivery/final.srt").read_text(encoding="utf-8")
+    assert srt == "1\n00:00:00,200 --> 00:00:01,000\n先查资料\n\n2\n00:00:01,300 --> 00:00:02,200\n再回答\n"
     run("template_payload.py", "--template", "compare", "--duration-frames", 150, "--beats", "0,45,100", "--props", examples / "compare-props.json", "--output", project / "assets/broll/compare.json", root=installed)
     payload = read_json(project / "assets/broll/compare.json")
     assert next(p for p in payload["properties"] if p["key"] == "staticPreview")["defaultValue"] is False
     preview = json.loads(run("synthesize_doubao.py", "--script", project / "script.txt", "--speaker", "offline-preview", "--output", project / "audio/preview", root=installed))
     assert preview["mode"] == "preview" and preview["speech_rate"] == 15
     assert not (project / "audio/preview").exists()
-    report = {"status": "pass", "checks": ["fresh installation in path with spaces", "package references", "project initialization", "silence-preserving acoustic and continuous handoff", "frame boundary rounding", "caption punctuation", "editable template payload", "TTS preview without credentials or network"], "fixture": "synthetic timing only", "external_generation": False, "finished_video": False}
+    report = {"status": "pass", "checks": ["fresh installation in path with spaces", "package references", "project initialization", "silence-preserving acoustic and continuous handoff", "frame boundary rounding", "single-line punctuation-free final captions with separate acoustic source", "editable template payload", "TTS preview without credentials or network"], "fixture": "synthetic timing only", "external_generation": False, "finished_video": False}
     write_json(output / "smoke-report.json", report)
     return report
 
