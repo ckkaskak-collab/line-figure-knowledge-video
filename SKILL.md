@@ -1,11 +1,15 @@
 ---
 name: line-figure-knowledge-video
-description: "将定稿文案或已有配音制作成白底线条小人 A-roll、浅灰手绘 B-roll 的知识视频。内置角色参考、动作接口、可编辑动画模板，支持声学对齐、ChatCut 整片剪辑、字幕、配乐和按需封面；也用于这套工作流的分镜与续做。"
+description: "将定稿文案或已有配音制作成白底线条小人 A-roll、浅灰手绘 B-roll 的知识视频。内置角色参考、动作接口、可编辑动画模板，默认使用 Remotion 完成整片，支持声学对齐、字幕、配乐和按需封面；也用于这套工作流的分镜与续做。"
 ---
 
 # 线条小人知识视频
 
 本包内置角色原图、Ian 风格参考、B-roll 模板和执行脚本，可独立安装，不依赖另一份本地 Skill。安装与环境见 [README](README.md)，来源与许可边界见 [THIRD_PARTY_NOTICES](THIRD_PARTY_NOTICES.md)。
+
+## 制作引擎
+
+后续线条小人视频默认使用 Remotion 制作可编辑画面、整片时间轴和 MP4，执行 [Remotion 工作流](references/remotion-workflow.md)。ChatCut 仅用于用户明确指定的任务或明确保留的旧工程续做。包内原始提示词、模板、README 中的 ChatCut 流程属于可选旧分支，不能覆盖此默认选择；原始提示词保持不变，其工具接口按所选引擎适配。
 
 ## 开始本次任务
 
@@ -19,6 +23,9 @@ description: "将定稿文案或已有配音制作成白底线条小人 A-roll�
 
 - A-roll：白底、黑线留白的小人参与具体动作，使用必要数量的独立关键状态图，必要时少量推近；缩放不替代人物行动。详见 [A-roll 接口](references/aroll-ian.md)。
 - B-roll：近白浅灰底、炭黑手绘、柔和蓝和少量暖橙。制作前查看 [规范和确认图](references/broll-visual-style.md)。
+- B-roll 默认加入[圆形讲解头像](references/broll-narrator.md)，音量条跟随真实旁白；A-roll 不显示。头像朝画面内侧，完整头部放入圆框，保留字幕和图解空间。
+- 平台识别优先用真实品牌标识；多服务连线分行、分落点；股价变化用逐步绘制的折线表达。素材来源、数据与示意边界见[视觉规范](references/broll-visual-style.md)。
+- 布局修订沿用已确认的手绘风格：箭头尖端分开、目标文字对齐箭头、同组短句紧凑排列；画面默认不显示素材来源或制作说明。具体规则见视觉规范，出处保存在本地清单。
 - 先布局，后动画。优先匹配 [包内模板](assets/broll/templates/index.json)，根据真实配音重设动作锚点；模板不匹配时自行设计，记录实际来源。
 - 画布默认 1920×1080、30 fps；已有工程沿用实际规格。新项目的字幕、字体、音色和片尾选择写入项目记录。没有指定片尾时不附加其他 IP 的片尾。
 - 标题字体可先试 Ma Shan Zheng，字幕可先试 Noto Sans SC；每个目标工程查询实际可用字体并检查合成字形，名称相同也不能替代渲染检查。
@@ -38,8 +45,8 @@ X 的六段提示词和飞书 2.0 的两段提示词完整保存在 `references/
 | 配音与对齐 | [X 01](references/original-prompts/x/01-voice-alignment.txt)、[时间和配音](references/timing-and-handoff.md)、[本地脚本](references/local-tools.md) | 整段合成或保留音频；保存原始 ASR、按定稿核对的短语表和连续编排表 |
 | 视觉编排 | [飞书编排 2.0](references/original-prompts/feishu/visual-storyboard-v2.txt) | 九列表、镜头结束节拍点、逗号数值、所缺素材；每次内部变化绑定真实短语/词锚点 |
 | A-roll | [角色动作接口](references/aroll-ian.md) | 读包内角色/风格/生图/QA 参考，独立生成状态图，保持角色与道具连续 |
-| B-roll | [视觉规范](references/broll-visual-style.md)、[可编辑实现](references/broll-editable.md)、[X 06](references/original-prompts/x/06-broll-motion.txt) | 静态布局、可编辑图形和实际模板记录；真实截图独立导入，不能用生成图冒充证据 |
-| 整片剪辑 | [ChatCut 接口](references/chatcut-workflow.md)、[飞书剪辑 2.0](references/original-prompts/feishu/chatcut-editing-v2.txt) | 使用当前宿主的 ChatCut 基础/导入/MG/验证/导出技能；连续完成时间轴及两份制作清单 |
+| B-roll | [视觉规范](references/broll-visual-style.md)、[可编辑实现](references/broll-editable.md)、[讲解头像](references/broll-narrator.md)、[X 06](references/original-prompts/x/06-broll-motion.txt) | 静态布局、可编辑图形、真实品牌素材、人声驱动头像；真实截图独立导入，不能用生成图冒充证据 |
+| 整片剪辑 | 默认 [Remotion 工作流](references/remotion-workflow.md)；仅明确使用 ChatCut 时读取 [ChatCut 接口](references/chatcut-workflow.md) 和 [飞书剪辑 2.0](references/original-prompts/feishu/chatcut-editing-v2.txt) | 按选定引擎完成可编辑时间轴及两份制作清单；默认交付 Remotion 源工程 |
 | 字幕与交付检查 | [字幕与成片](references/captions-and-delivery.md) | 核对最终 Card、渲染画面和 SRT；保存源码与实例参数；分别报告抽帧、播放、听审、导出 |
 | 配乐与音效 | [声音后期](references/audio-postproduction.md) | 按内容选择或复用素材，记录来源、混音和实际听审状态 |
 | 封面 | [封面分支](references/covers.md) | 用户要求时制作独立比例的封面；标题与概念画面不改变正文事实 |

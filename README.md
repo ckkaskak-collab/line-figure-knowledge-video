@@ -1,6 +1,6 @@
 # 线条小人知识视频工作流
 
-把定稿文案或已有配音，做成 **白底线条小人 + 浅灰手绘知识画面** 的视频。支持角色动作状态、声学对齐、ChatCut 可编辑工程、字幕、配乐、MP4 和按需封面。
+把定稿文案或已有配音，做成 **白底线条小人 + 浅灰手绘知识画面** 的视频。支持角色动作状态、声学对齐、Remotion 可编辑工程、字幕、配乐、MP4 和按需封面。
 
 这是给 Codex 等支持 Skill 的助手使用的工作流。角色参考、绘图规则和四种 B-roll 模板已经内置，无需安装作者的其他 Skill，也无需访问作者的项目、飞书账号或 API 配置。第三方生成和剪辑服务使用你自己的账号。
 
@@ -25,7 +25,7 @@ Windows 可以把 `python3` 换成 `py`。默认安装到 `$CODEX_HOME/skills/li
 
 把定稿或音频放入你的项目目录，然后告诉助手：
 
-> 使用 $line-figure-knowledge-video。用这份定稿和已有配音制作一条线条小人知识视频，采用内置角色与浅灰手绘风格，完成 ChatCut 可编辑工程并导出 MP4。按已授权范围连续执行，记录需要补充的真实素材。
+> 使用 $line-figure-knowledge-video。用这份定稿和已有配音制作一条线条小人知识视频，采用内置角色与浅灰手绘风格，完成 Remotion 可编辑工程并导出 MP4。按已授权范围连续执行，记录需要补充的真实素材。
 
 只需要方案可以说：
 
@@ -39,10 +39,13 @@ Windows 可以把 `python3` 换成 `py`。默认安装到 `$CODEX_HOME/skills/li
 | 新生成角色图或封面 | 能接收参考图片的图像生成工具；已有图片可直接复用 |
 | 自动声学转写 | 本地 faster-whisper，或你提供的真实词级声学结果 |
 | 豆包新配音（可选） | 自己的豆包/火山语音服务凭据、可用音色及 `httpx` |
-| 可编辑整片与 MP4 | 已登录且权限可用的 ChatCut 插件；导出能力以你的账号为准 |
+| 可编辑整片与 MP4 | 可用的 Remotion 工程、Node.js 与浏览器渲染环境；优先复用现有项目 |
+| 继续旧 ChatCut 工程（按需） | 已登录且权限可用的 ChatCut 插件 |
 | 本地成片解码检查 | FFmpeg / ffprobe（可选） |
 
-没有豆包密钥也能使用已有音频继续。未连接 ChatCut 时可准备分镜和素材，但不能声称已经创建可编辑工程或导出视频。工具检查不会替你购买额度。
+没有豆包密钥也能使用已有音频继续。默认按 [Remotion 制作流程](references/remotion-workflow.md) 创建或复用可编辑工程；只有实际生成并核验文件后才报告导出完成。ChatCut 用于明确继续的旧工程。工具检查不会替你购买额度。
+
+B-roll 中的具体品牌使用真实标识，多平台连线保持独立落点，股价使用逐步绘制的折线并区分真实数据与走势示意。默认叠加 [圆形讲解头像](references/broll-narrator.md)：完整头部面向画面内侧，音量条跟随旁白，A-roll 不显示。具体规则见 [B-roll 视觉规范](references/broll-visual-style.md)。
 
 ## 不调用外部服务的试运行
 
@@ -96,11 +99,12 @@ python3 scripts/synthesize_doubao.py --script narration.txt --output my-video/au
 
 - [SKILL.md](SKILL.md)：执行入口与阶段路由。
 - [角色原图](assets/character/reference.jpg)、[绘图规则](references/illustration/character-ip.md)：默认角色，也支持项目自己的角色参考。
+- [讲解头像素材](assets/character/speaker-head-right.png)、[头像与音量条规范](references/broll-narrator.md)：完整头部、朝向、旁白时间映射和检查要求。
 - [B-roll 模板目录](assets/broll/templates/index.json)：检索到回答、双侧比较、分流、真实截图外围布局；文字、颜色与动作帧可编辑。
 - [字幕与交付](references/captions-and-delivery.md)、[配乐](references/audio-postproduction.md)、[封面](references/covers.md)：按需读取的制作说明。
 - [原文来源清单](references/source-manifest.json)：八段提示词及快照，离线可读，原文保持不变。
 - `scripts/`：安装、检查、项目初始化、声学转写/对齐、SRT 和模板实例化；脚本参数均可用 `--help` 查看。
 
-模板依赖 ChatCut 原生 MG 运行时，不能当作独立网页直接播放。实例化后需通过当前 ChatCut 工具导入、上轨并检查。字体查询、角色一致性、语音听感、全片连续观看需要在实际项目中完成，离线测试不能替代。
+包内旧 JSX 模板依赖 ChatCut 原生 MG 运行时，不能当作独立网页或 Remotion 组件直接播放；在 Remotion 中作为布局参考改写。继续旧 ChatCut 工程时，实例化后通过对应工具导入、上轨并检查。字体查询、角色一致性、语音听感、全片连续观看需要在实际项目中完成，离线测试不能替代。
 
 原创代码和说明采用 [MIT](LICENSE)；第三方原文、Ian 参考和角色素材的边界见 [来源说明](THIRD_PARTY_NOTICES.md)。
