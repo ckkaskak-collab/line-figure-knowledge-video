@@ -1,6 +1,6 @@
 ---
 name: line-figure-knowledge-video
-description: "将定稿文案或已有配音制作成白底线条小人 A-roll、浅灰手绘 B-roll 的知识视频。内置角色参考、动作接口、可编辑动画模板，默认使用 Remotion 完成整片，支持声学对齐、字幕、配乐和按需封面；也用于这套工作流的分镜与续做。"
+description: "将定稿文案或已有配音制作成线条小人知识视频：A-roll 用场景定格动画演绎铺垫、情绪与衔接，B-roll 用图形、图片和动效联动讲解干货。沿用白底角色与浅灰手绘风格，默认使用 Remotion，支持分镜、声学对齐、字幕、整片交付与续做。"
 ---
 
 # 线条小人知识视频
@@ -19,23 +19,33 @@ description: "将定稿文案或已有配音制作成白底线条小人 A-roll�
 4. 默认角色是 [包内原图](assets/character/reference.jpg)。若用户指定自己的角色，将其保存在项目并记录路径，替代角色参考和对应身份描述。每次生图都实际查看并传入选定原图。
 5. 新项目使用 `python3 scripts/init_project.py --script <定稿.txt> --output <新项目目录>`，可加 `--audio <已有音频>`；它保存输入与续做结构，不自动触发外部付费操作。输入音频可由任意已获授权的来源提供。
 
+## 画面分工与导演目标
+
+视觉编排前读取 [A/B-roll 叙事与动作设计](references/visual-storytelling.md) 及其中的用户参考图。A/B 的分工用于区分内容层次、丰富表现方式：
+
+- **A-roll 动画卡片负责场景演绎。** 铺垫、经历、情绪和衔接段落，让人物在具体处境中行动，以多张连续的关键状态图组成有意思的定格小戏。
+- **B-roll 视觉动效负责干货讲解。** 围绕当前知识关系，让图形、图片或真实素材与动作相互对应，呈现比较、筛选、拆解、因果或变化过程。
+
+先明确这段文案的作用、观众要看懂什么及主体怎样变化，再选素材和模板。A-roll 检查动作与结果是否成立，B-roll 检查知识关系是否被画面解释出来；换姿势、逐项入场和配色通过只是局部检查。按语义选择 A/B，不设固定比例或轮换顺序。参考图用于校准分工，角色与配色沿用当前默认；更换画风以用户的明确选择为准。
+
 ## 已确定的默认风格
 
-- A-roll：白底、黑线留白的小人参与具体动作，使用必要数量的独立关键状态图，必要时少量推近；缩放不替代人物行动。详见 [A-roll 接口](references/aroll-ian.md)。
-- B-roll：近白浅灰底、炭黑手绘、柔和蓝和少量暖橙。制作前查看 [规范和确认图](references/broll-visual-style.md)。
+- A-roll：白底、黑线留白的小人参与具体场景，用必要数量的独立关键状态图表现处境、行动与结果，必要时少量推近。详见 [A-roll 接口](references/aroll-ian.md)。
+- B-roll：近白浅灰底、炭黑手绘、柔和蓝和少量暖橙；主体是参与讲解的对象、图形及其关系。制作前查看 [规范和确认图](references/broll-visual-style.md)。
 - B-roll 默认加入[圆形讲解头像](references/broll-narrator.md)，音量条跟随真实旁白；A-roll 不显示。头像朝画面内侧，完整头部放入圆框，保留字幕和图解空间。
 - 平台识别优先用真实品牌标识；多服务连线分行、分落点；股价变化用逐步绘制的折线表达。素材来源、数据与示意边界见[视觉规范](references/broll-visual-style.md)。
 - 布局修订沿用已确认的手绘风格：箭头尖端分开、目标文字对齐箭头、同组短句紧凑排列；画面默认不显示素材来源或制作说明。具体规则见视觉规范，出处保存在本地清单。
-- 先布局，后动画。优先匹配 [包内模板](assets/broll/templates/index.json)，根据真实配音重设动作锚点；模板不匹配时自行设计，记录实际来源。
+- 先确定知识关系和动作，再检查完整布局并制作动画。[包内模板](assets/broll/templates/index.json)按语义匹配，保留适用的骨架并按真实配音重设锚点；不适用时自行设计，记录实际来源。
+- 逐项讲解时，框线、文字、数值、底条和相关连线作为整组，随对应口播依次出现；尚未讲到的组完整隐藏。执行[整组随口播出现](references/broll-editable.md#整组随口播出现)，并按[逐项出现检查](references/captions-and-delivery.md#逐项出现检查)核对合成及编码后的画面。用户指出一处同类问题时，检查全片相关镜头及共用组件。
 - 画布默认 1920×1080、30 fps；已有工程沿用实际规格。新项目的字幕、字体、音色和片尾选择写入项目记录。没有指定片尾时不附加其他 IP 的片尾。
-- 字幕默认先按原稿标点换屏，再去除显示标点，每屏严格一行；超长句按完整语义继续拆分，保留真实发声时间。执行 [字幕规则](references/captions-and-delivery.md#字幕切分与显示)。
+- 字幕默认以原稿标点和完整语义确定换屏，去除显示标点，每屏严格一行；短词和连续列举避免频繁闪切，短停顿保持到下一条，切镜不打断字幕。保留真实发声记录与独立显示区间，执行 [字幕规则](references/captions-and-delivery.md#字幕切分与显示)。
 - 标题字体可先试 Ma Shan Zheng，字幕可先试 Noto Sans SC；每个目标工程查询实际可用字体并检查合成字形，名称相同也不能替代渲染检查。
 
 ## 原文与执行规则
 
 X 的六段提示词和飞书 2.0 的两段提示词完整保存在 `references/original-prompts/`。来源、原版本和哈希见 [来源清单](references/source-manifest.json)。先运行 `python3 scripts/verify_sources.py`，不以重算基准掩盖原文变化。
 
-执行某阶段时完整读取对应原文。具体输入、角色、配色、工具接口和本包补充规则放在原文外，不改写原文。默认视觉编排采用飞书 2.0，X 02 留作可选原路线。A-roll 使用包内角色接口，X 03/04/05 作为角色三视图或原路线的可选参考，不同时强制注入。
+执行某阶段时完整读取对应原文。具体输入、角色、配色、工具接口和本包补充规则放在原文外，不改写原文。默认视觉编排采用飞书 2.0，并按本包的 A/B 叙事分工填写画面设计与动态变化；X 02 留作可选原路线。A-roll 使用包内角色接口，X 03/04/05 作为角色三视图或原路线的可选参考，不同时强制注入。
 
 以下调度是本包补充：只请求分镜时到分镜结束；用户要求整片时，分镜完成后继续已授权的制作。单独请求挑动效时提供方案供选择；已授权整片时自行选合适模板并记录，不逐镜重问。外部费用按用户已有预算和授权执行，不能把原文“使用 Codex 额度”解释为第三方服务免费。
 
@@ -44,9 +54,9 @@ X 的六段提示词和飞书 2.0 的两段提示词完整保存在 `references/
 | 阶段 | 读取 | 执行与交付 |
 |---|---|---|
 | 配音与对齐 | [X 01](references/original-prompts/x/01-voice-alignment.txt)、[时间和配音](references/timing-and-handoff.md)、[本地脚本](references/local-tools.md) | 整段合成或保留音频；保存原始 ASR、按定稿核对的短语表和连续编排表 |
-| 视觉编排 | [飞书编排 2.0](references/original-prompts/feishu/visual-storyboard-v2.txt) | 九列表、镜头结束节拍点、逗号数值、所缺素材；每次内部变化绑定真实短语/词锚点 |
-| A-roll | [角色动作接口](references/aroll-ian.md) | 读包内角色/风格/生图/QA 参考，独立生成状态图，保持角色与道具连续 |
-| B-roll | [视觉规范](references/broll-visual-style.md)、[可编辑实现](references/broll-editable.md)、[讲解头像](references/broll-narrator.md)、[X 06](references/original-prompts/x/06-broll-motion.txt) | 静态布局、可编辑图形、真实品牌素材、人声驱动头像；真实截图独立导入，不能用生成图冒充证据 |
+| 视觉编排 | [叙事与动作设计](references/visual-storytelling.md)、[飞书编排 2.0](references/original-prompts/feishu/visual-storyboard-v2.txt) | 九列表中写明本镜作用、动作前后状态和承接对象；镜头结束节拍点、逗号数值、所缺素材；内部变化绑定真实短语/词锚点 |
+| A-roll | [角色动作接口](references/aroll-ian.md) | 先设计场景小戏，再独立生成连续状态图；保持角色、机位与道具连续，核对动作和结果 |
+| B-roll | [视觉规范](references/broll-visual-style.md)、[可编辑实现](references/broll-editable.md)、[讲解头像](references/broll-narrator.md)、[X 06](references/original-prompts/x/06-broll-motion.txt) | 先设计对象联动和知识关系，再按口播推进；可编辑图形、独立图片/真实素材、人声驱动头像；核对过程及整组出现 |
 | 整片剪辑 | 默认 [Remotion 工作流](references/remotion-workflow.md)；仅明确使用 ChatCut 时读取 [ChatCut 接口](references/chatcut-workflow.md) 和 [飞书剪辑 2.0](references/original-prompts/feishu/chatcut-editing-v2.txt) | 按选定引擎完成可编辑时间轴及两份制作清单；默认交付 Remotion 源工程 |
 | 字幕与交付检查 | [字幕与成片](references/captions-and-delivery.md) | 核对最终 Card、渲染画面和 SRT；保存源码与实例参数；分别报告抽帧、播放、听审、导出 |
 | 配乐与音效 | [声音后期](references/audio-postproduction.md) | 按内容选择或复用素材，记录来源、混音和实际听审状态 |
